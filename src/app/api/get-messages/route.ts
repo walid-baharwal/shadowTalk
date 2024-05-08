@@ -63,7 +63,7 @@ export async function GET(request: Request) {
         return Response.json(
             {
                 succes: false,
-                message: "error getting messages" + error.message,
+                message: "error getting messages " + error.message,
             },
             { status: 500 }
         );
