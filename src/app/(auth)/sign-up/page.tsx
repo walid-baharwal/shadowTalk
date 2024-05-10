@@ -55,7 +55,7 @@ export default function SignupForm() {
     try {
       const response = await axios.post<ApiResponse>("/api/sign-up", data);
       if (response.data.success) {
-        router.replace(`/varify/${username}`);
+        router.replace(`/verify/${username}`);
       }
     } catch (error) {
       console.error("Error during sign-up:", error);
@@ -76,7 +76,7 @@ export default function SignupForm() {
   return (
     <>
       <div className="flex items-center justify-center min-h-screen ">
-        <div className="p-8 max-w-xs md:max-w-md w-full shadow-[20px_40px_60px_-20px_rgba(255,255,255,0.15)] rounded-lg border border-gray-800">
+        <div className="p-8 max-w-xs md:max-w-md w-full shadow-[0_40px_60px_-25px_rgba(255,200,255,0.15)] rounded-lg border  border-gray-800 ">
           <div className="text-center">
             <h1 className="text-2xl font-extrabold tracking-tight md:text-3xl mb-6">
               Join Shadow Talk
@@ -114,7 +114,7 @@ export default function SignupForm() {
                         </span>
                       )}
                     </div>
-                    <FormMessage />
+                    <FormMessage  />
                   </FormItem>
                 )}
               />
@@ -126,7 +126,7 @@ export default function SignupForm() {
                     <FormControl>
                       <Input placeholder="email" {...field} />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-red-700" />
                   </FormItem>
                 )}
               />
@@ -138,7 +138,7 @@ export default function SignupForm() {
                     <FormControl>
                       <Input type="password" placeholder="password" {...field} />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-red-700" />
                   </FormItem>
                 )}
               />
