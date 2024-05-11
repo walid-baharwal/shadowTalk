@@ -52,7 +52,7 @@ const Verify = () => {
   return (
     <>
       <div className="flex items-center justify-center min-h-screen ">
-        <div className="p-8 max-w-xs md:max-w-md w-full shadow-[20px_40px_60px_-20px_rgba(255,255,255,0.15)] rounded-lg border border-gray-800">
+        <div className="p-8 max-w-xs md:max-w-[400px] w-full shadow-[20px_40px_60px_-20px_rgba(255,255,255,0.15)] rounded-lg border border-gray-800">
           <div className="text-center">
             <h1 className="text-2xl font-extrabold tracking-tight md:text-3xl mb-6">
               Verify your account

@@ -1,61 +1,63 @@
-import dbConnect from "@/lib/dbConnect";
-import UserModel from "@/models/User.model";
-import Credentials from "next-auth/providers/credentials";
-import { NextAuthOptions } from "next-auth";
+    import dbConnect from "@/lib/dbConnect";
+    import UserModel from "@/models/User.model";
+    import Credentials from "next-auth/providers/credentials";
+    import { NextAuthOptions } from "next-auth";
 
-export const authOptions: NextAuthOptions = {
+    export const authOptions: NextAuthOptions = {
     providers: [
         Credentials({
-            id: "credentials",
-            name: "Credentials",
-            credentials: {
-                email: { label: "Email" },
-                password: { label: "Password", type: "password" },
-            },
+        id: "credentials",
+        name: "Credentials",
+        credentials: {
+            username:{label: "Username"},
+            email: { label: "Email" },
+            password: { label: "Password", type: "password" },
+        },
 
-            async authorize(credentials: any): Promise<any> {
-                dbConnect();
-                try {
-                    const user = await UserModel.findOne({
-                        email: credentials.identifier,
-                    });
-                    if (!user) {
-                        throw new Error("User with this email not found");
-                    }
-                    if (!user.isVerified) {
-                        throw new Error("Please verify your account before logging in");
-                    }
-                    const isPasswordCorrect = user.isPasswordCorrect(credentials.password);
-                    if (!isPasswordCorrect) {
-                        throw new Error("Please login using correct credentials");
-                    }
-                    return user;
-                } catch (error: any) {
-                    throw new Error(error.message);
-                }
-            },
+        async authorize(credentials: any): Promise<any> {
+            dbConnect();
+            try {
+            const user = await UserModel.findOne({
+                $or: [{ email: credentials.identifier }, { username: credentials.identifier }],
+            });
+            if (!user) {
+                throw new Error("User with this credential not found");
+            }
+            if (!user.isVerified) {
+                throw new Error("Please verify your account before logging in");
+            }
+            const isPasswordCorrect = await user.isPasswordCorrect(credentials.password);
+            if (isPasswordCorrect) {
+                return user;
+            } else {
+                throw new Error("Please login using correct credentials");
+            }
+            } catch (error: any) {
+            throw new Error(error.message);
+            }
+        },
         }),
     ],
 
     callbacks: {
         async jwt({ token, user }) {
-            if (user) {
-                token._id = user._id?.toString();
-                token.username = user.username;
-                token.isVerified = user.isVerified;
-                token.isAcceptingMessage = user.isAcceptingMessage;
-            }
-
-            return token;
-        },
-        async session({ session, token }) {
-            if (token) {
-                session.user._id = token._id;
-                session.user.username = token.username;
-                session.user.isVerified = token.isVerified;
-                session.user.isAcceptingMessage = token.isAcceptingMessage;
-            }
-            return session;
+        if (user) {
+            token._id = user._id?.toString();
+            token.username = user.username;
+            token.isVerified = user.isVerified;
+            token.isAcceptingMessage = user.isAcceptingMessage;
+        }
+        return token;
+    },
+    async session({ session, token }) {
+        if (token) {
+            session.user._id = token._id;
+            session.user.username = token.username;
+            session.user.isVerified = token.isVerified;
+            session.user.isAcceptingMessage = token.isAcceptingMessage;
+        }
+            //console.log("session -->" , session);
+        return session;
         },
     },
     session: {
@@ -65,4 +67,4 @@ export const authOptions: NextAuthOptions = {
     pages: {
         signIn: "/sign-in",
     },
-};
+    };
