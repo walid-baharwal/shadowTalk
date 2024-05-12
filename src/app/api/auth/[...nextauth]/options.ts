@@ -15,7 +15,7 @@
         },
 
         async authorize(credentials: any): Promise<any> {
-            dbConnect();
+           await dbConnect();
             try {
             const user = await UserModel.findOne({
                 $or: [{ email: credentials.identifier }, { username: credentials.identifier }],

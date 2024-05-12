@@ -1,13 +1,15 @@
-import type { Metadata } from "next";
+import Navbar from "@/components/Navbar";
 
-export const metadata: Metadata = {
-  title: "Shadow Talk",
-  description: "Send Anoymous Messages to Shadow User",
-};
+
 interface RootLayoutProps {
   children: React.ReactNode;
 }
 
 export default function RootLayout({ children }: RootLayoutProps) {
-  return <div>{children}</div>;
+  return (
+    <div className="flex flex-col min-h-screen">
+      <Navbar />
+      {children}
+    </div>
+  );
 }
