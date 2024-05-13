@@ -18,12 +18,13 @@ export async function POST(request: Request) {
             { status: 400 }
         );
     }
-    const { acceptedMessage } = await request.json();
+    const { acceptMessage } = await request.json();
+    console.log("accptMessage-.............>>>>> ", acceptMessage);
     try {
         const updatedUser = await UserModel.findByIdAndUpdate(
             user._id,
             {
-                isAcceptingMessage: acceptedMessage,
+                isAcceptingMessage: acceptMessage,
             },
             { new: true }
         );
@@ -54,9 +55,9 @@ export async function POST(request: Request) {
         );
     }
 }
-
+///
 export async function GET(request: Request) {
-    dbConnect();
+   await dbConnect();
 
     const session = await getServerSession(authOptions);
     const user: User = session?.user;
@@ -72,6 +73,9 @@ export async function GET(request: Request) {
     }
 
     try {
+        // const user = {
+        //     _id:'6639dc780280df3455e3ad59',
+        // }
         const foundUser = await UserModel.findById(user._id);
         if (!foundUser) {
             return Response.json(

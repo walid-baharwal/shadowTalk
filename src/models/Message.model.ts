@@ -1,15 +1,17 @@
-import mongoose, { Schema, Document, mongo } from "mongoose";
+import mongoose, { Schema, Document } from "mongoose";
 
 export interface Message extends Document {
   content: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export const messageSchema: Schema<Message> = new Schema(
   {
-    content:{
-        type: String,
-        required: [true," Message is required"]
-    }
+    content: {
+      type: String,
+      required: [true, " Message is required"],
+    },
   },
   { timestamps: true }
 );

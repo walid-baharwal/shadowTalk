@@ -4,6 +4,8 @@
     import { NextAuthOptions } from "next-auth";
 
     export const authOptions: NextAuthOptions = {
+        
+
     providers: [
         Credentials({
         id: "credentials",
@@ -63,7 +65,7 @@
     session: {
         strategy: "jwt",
     },
-    secret: process.env.AUTH_SECRET,
+    secret: process.env.NEXTAUTH_SECRET,
     pages: {
         signIn: "/sign-in",
     },

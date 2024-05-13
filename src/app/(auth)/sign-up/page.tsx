@@ -14,6 +14,7 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from "@/component
 import { Input } from "@/components/ui/input";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
+import { BackgroundBeams } from "@/components/ui/background-beams";
 export default function SignupForm() {
   const [username, setUsername] = useState("");
   const [usernameMessage, setUsernameMessage] = useState("");
@@ -76,7 +77,7 @@ export default function SignupForm() {
   return (
     <>
       <div className="flex items-center justify-center min-h-screen ">
-        <div className="p-8 max-w-xs md:max-w-[400px] w-full shadow-[0_40px_60px_-25px_rgba(255,200,255,0.15)] rounded-lg border  border-gray-800 ">
+        <div className="p-8 max-w-xs md:max-w-[400px] w-full shadow-[0_20px_80px_-25px_rgba(255,200,255,0.15)] rounded-lg border  border-gray-800 ">
           <div className="text-center">
             <h1 className="text-2xl font-extrabold tracking-tight md:text-3xl mb-6">
               Join Shadow Talk
@@ -162,6 +163,7 @@ export default function SignupForm() {
             </p>
           </div>
         </div>
+        <BackgroundBeams  className="-z-10"/>
       </div>
     </>
   );

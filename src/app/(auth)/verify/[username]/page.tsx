@@ -12,6 +12,7 @@ import { z } from "zod";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { BackgroundBeams } from "@/components/ui/background-beams";
 
 const Verify = () => {
   const router = useRouter();
@@ -52,7 +53,7 @@ const Verify = () => {
   return (
     <>
       <div className="flex items-center justify-center min-h-screen ">
-        <div className="p-8 max-w-xs md:max-w-[400px] w-full shadow-[20px_40px_60px_-20px_rgba(255,255,255,0.15)] rounded-lg border border-gray-800">
+        <div className="p-8 max-w-xs md:max-w-[400px] w-full shadow-[0_20px_80px_-25px_rgba(255,200,255,0.15)] rounded-lg border border-gray-800">
           <div className="text-center">
             <h1 className="text-2xl font-extrabold tracking-tight md:text-3xl mb-6">
               Verify your account
@@ -85,6 +86,7 @@ const Verify = () => {
             </form>
           </Form>
         </div>
+        <BackgroundBeams  className="-z-10"/>
       </div>
     </>
   );
