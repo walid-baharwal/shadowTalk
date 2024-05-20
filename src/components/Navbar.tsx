@@ -15,16 +15,16 @@ const Navbar = () => {
             Shadow Talk
           </a>
           {session ? (
-            <>
+            <div className="flex justify-between items-center">
               <span className="mr-4">Welcome, {user.username || user.email}</span>
               <Button
                 onClick={() => signOut()}
-                className="w-full md:w-auto bg-slate-100 text-black"
+                className="w-full md:w-auto max-w-20 bg-slate-100 text-black"
                 variant="outline"
               >
                 Logout
               </Button>
-            </>
+            </div>
           ) : (
             <Link href="/sign-in">
               <Button className="w-full md:w-auto bg-slate-100 text-black" variant={"outline"}>

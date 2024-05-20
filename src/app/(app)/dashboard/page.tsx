@@ -25,7 +25,7 @@ const Dashboard = () => {
   const { data: session } = useSession();
 
   const handleDeleteMessage = async (messageId: string) => {
-    setMessages(messages.filter((message) => message.id !== messageId));
+    setMessages((prevMessages) => prevMessages.filter((message) => message._id !== messageId));
   };
   const form = useForm<z.infer<typeof acceptMessageSchema>>({
     resolver: zodResolver(acceptMessageSchema),
@@ -76,7 +76,7 @@ const Dashboard = () => {
         setIsSwitchLoading(false);
       }
     },
-    [setIsLoading, setMessages, toast]
+    [setIsLoading, toast]
   );
 
   useEffect(() => {
@@ -90,8 +90,8 @@ const Dashboard = () => {
     try {
       const response = await axios.post<ApiResponse>("/api/accept-message", {
         acceptMessage: !acceptMessage,
-      }); 
-      setValue('acceptMessage', !acceptMessage);
+      });
+      setValue("acceptMessage", !acceptMessage);
       toast({
         title: response.data.message,
         variant: "default",
@@ -105,25 +105,28 @@ const Dashboard = () => {
       });
     }
   };
-  
-      if (!session || !session.user) {
-        return    <div className="my-8 mx-4 md:mx-8 lg:mx-auto p-6  rounded w-full max-w-6xl gap-y-5">
-           <div className="flex items-center space-x-4 py-3">
-      <Skeleton className="h-12 w-12 rounded-full" />
-      <div className="space-y-2">
-        <Skeleton className="h-4 w-[250px]" />
-        <Skeleton className="h-4 w-[200px]" />
+
+  if (!session || !session.user) {
+    return (
+      <div className="my-8 mx-4 md:mx-8 lg:mx-auto p-6  rounded w-full max-w-6xl gap-y-5">
+        <div className="flex items-center space-x-4 py-3">
+          <Skeleton className="h-12 w-12 rounded-full" />
+          <div className="space-y-2">
+            <Skeleton className="h-4 w-[250px]" />
+            <Skeleton className="h-4 w-[200px]" />
+          </div>
+        </div>
+        <Separator />
+        <div className="flex items-center space-x-4 py-10 ">
+          <Skeleton className="h-12 w-12 rounded-full" />
+          <div className="space-y-2">
+            <Skeleton className="h-4 w-[250px]" />
+            <Skeleton className="h-4 w-[200px]" />
+          </div>
+        </div>
       </div>
-    </div>
-    <div className="flex items-center space-x-4 py-10 ">
-      <Skeleton className="h-12 w-12 rounded-full" />
-      <div className="space-y-2">
-        <Skeleton className="h-4 w-[250px]" />
-        <Skeleton className="h-4 w-[200px]" />
-      </div>
-    </div>
-        </div>;
-      }
+    );
+  }
 
   const { username } = session?.user as User;
   const baseUrl = `${window.location.protocol}//${window.location.host}`;
@@ -139,8 +142,7 @@ const Dashboard = () => {
 
   return (
     <>
-      <div className="my-8 mx-4 md:mx-8 lg:mx-auto p-6  rounded w-full max-w-6xl">
-    
+      <div className="my-8 mx-2 md:mx-8 lg:mx-auto p-6 rounded w-full max-w-6xl flex-col justify-self-center">
         <h1 className="text-4xl font-bold mb-4">User Dashboard</h1>
 
         <div className="mb-4">
